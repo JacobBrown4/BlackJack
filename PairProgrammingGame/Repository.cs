@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Messaging;
@@ -112,7 +113,8 @@ namespace PairProgrammingGame
             Card newCard = GetRandomCard();
             deck._deck.Remove(newCard.Index);
             _playerHand.Add(newCard);
-            Console.WriteLine($"Hit! You were dealt a {newCard.Number} of {newCard.Suit}\n"+$"{newCard.Letter}{newCard.Symbol}");
+            DisplayCardsAfterDeal();
+            Console.WriteLine($"Hit! You were dealt a {newCard.Number} of {newCard.Suit}\n" + $"{newCard.Letter}{newCard.Symbol}");
             --currentDeckSize;
         }
 
@@ -121,13 +123,11 @@ namespace PairProgrammingGame
             Card newCard = GetRandomCard();
             deck._deck.Remove(newCard.Index);
             _dealerHand.Add(newCard);
-            Console.WriteLine($"Dealer hit! dealt a {newCard.Number} of {newCard.Suit}");
+            DisplayCardsAfterPlayerGoes();
+            Console.WriteLine($"Dealer hit! dealt a {newCard.Number} of {newCard.Suit} giving him {DealerTotal()}");
             --currentDeckSize;
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
         }
-
-        // Method for Ace
-        // Output two totals unless one is > 21;
-
         public int PlayerTotal()
         {
             int playerTotal = 0;
@@ -152,6 +152,115 @@ namespace PairProgrammingGame
 
             else
             { return playerTotal; }
+        }
+
+        public void DisplayCards()
+        {
+            Console.Clear();
+            Card dealerCard1 = _dealerHand[0];
+            Card dealerCard2 = _dealerHand[1];
+            Card playerCard1 = _playerHand[0];
+            Card playerCard2 = _playerHand[1];
+
+
+            Console.WriteLine(
+                " _______     _______\n" +
+                "|       |   |       |\n" +
+               $"| {dealerCard1.Letter}{(dealerCard1.Letter == "10" ? "" : " ")}    |   | ///// |\n" +
+               $"|   {dealerCard1.Symbol}   |   | ///// |\n" +
+               $"|    {(dealerCard1.Letter == "10" ? "" : " ")}{dealerCard1.Letter} |   | ///// |\n" +
+               $"|_______|   |_______|\n");
+            Console.WriteLine($"The dealer is showing a {dealerCard1.Number} of {dealerCard1.Suit}\n");
+
+            Console.WriteLine(
+            " _______     _______\n" +
+            "|       |   |       |\n" +
+           $"| {playerCard1.Letter}{(playerCard1.Letter == "10" ? "" : " ")}    |   | {playerCard2.Letter}{(playerCard2.Letter == "10" ? "" : " ")}    |\n" +
+           $"|   {playerCard1.Symbol}   |   |   {playerCard2.Symbol}   |\n" +
+           $"|    {(playerCard1.Letter == "10" ? "" : " ")}{playerCard1.Letter} |   |    {(playerCard2.Letter == "10" ? "" : " ")}{playerCard2.Letter} |\n" +
+           $"|_______|   |_______|\n");
+            Console.WriteLine($"You were dealt:\n" + $"\t{playerCard1.Number} of {playerCard1.Suit} {playerCard1.Letter}{playerCard1.Symbol}\n" + $"\t{playerCard2.Number} of {playerCard2.Suit} {playerCard2.Letter}{playerCard2.Symbol}");
+
+        }
+        public void DisplayCardsAfterDeal()
+        {
+            Console.Clear();
+            Card dealerCard1 = _dealerHand[0];
+            Card dealerCard2 = _dealerHand[1];
+            Card playerCard1 = _playerHand[0];
+            Card playerCard2 = _playerHand[1];
+
+
+            Console.WriteLine(
+                " _______     _______\n" +
+                "|       |   |       |\n" +
+               $"| {dealerCard1.Letter}{(dealerCard1.Letter == "10" ? "" : " ")}    |   | ///// |\n" +
+               $"|   {dealerCard1.Symbol}   |   | ///// |\n" +
+               $"|    {(dealerCard1.Letter == "10" ? "" : " ")}{dealerCard1.Letter} |   | ///// |\n" +
+               $"|_______|   |_______|\n");
+            Console.WriteLine($"The dealer is showing a {dealerCard1.Number} of {dealerCard1.Suit}\n");
+
+            Console.WriteLine(
+           $" _______     _______{(_playerHand.Count >= 3 ? "     _______" : "")}{(_playerHand.Count >= 4 ? "     _______" : "")}{(_playerHand.Count >= 5 ? "     _______" : "")}\n" +
+           $"|       |   |       |{(_playerHand.Count >= 3 ? "   |       |" : "")}{(_playerHand.Count >= 4 ? "   |       |" : "")}{(_playerHand.Count >= 5 ? "   |       |" : "")}\n" +
+           $"| {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    |   | {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    |{(_playerHand.Count >= 3 ? $"   | {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 4 ? $"   | {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 5 ? $"   | {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
+           $"|   {_playerHand[0].Symbol}   |   |   {_playerHand[0].Symbol}   |{(_playerHand.Count >= 3 ? $"   |   {_playerHand[2].Symbol}   |" : "")}{(_playerHand.Count >= 4 ? $"   |   {_playerHand[3].Symbol}   |" : "")}{(_playerHand.Count >= 5 ? $"   |   {_playerHand[4].Symbol}   |" : "")}\n" +
+           $"|     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}|   |     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}|{(_playerHand.Count >= 3 ? $"   |     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 4 ? $"   |     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 5 ? $"   |     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
+           $"|_______|   |_______|{(_playerHand.Count >= 3 ? "   |_______|" : "")}{(_playerHand.Count >= 4 ? "   |_______|" : "")}{(_playerHand.Count >= 5 ? "   |_______|" : "")}\n");
+            
+        }
+        public void DisplayCardsAfterPlayerGoes()
+        {
+            Console.Clear();
+
+            Console.WriteLine(
+           $" _______     _______{(_dealerHand.Count >= 3 ? "     _______" : "")}{(_dealerHand.Count >= 4 ? "     _______" : "")}{(_dealerHand.Count >= 5 ? "     _______" : "")}\n" +
+           $"|       |   |       |{(_dealerHand.Count >= 3 ? "   |       |" : "")}{(_dealerHand.Count >= 4 ? "   |       |" : "")}{(_dealerHand.Count >= 5 ? "   |       |" : "")}\n" +
+           $"| {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}    |   | {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}    |{(_dealerHand.Count >= 3 ? $"   | {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_dealerHand.Count >= 4 ? $"   | {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_dealerHand.Count >= 5 ? $"   | {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
+           $"|   {_dealerHand[0].Symbol}   |   |   {_dealerHand[1].Symbol}   |{(_dealerHand.Count >= 3 ? $"   |   {_dealerHand[2].Symbol}   |" : "")}{(_dealerHand.Count >= 4 ? $"   |   {_dealerHand[3].Symbol}   |" : "")}{(_dealerHand.Count >= 5 ? $"   |   {_dealerHand[4].Symbol}   |" : "")}\n" +
+           $"|     {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}|   |     {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}|{(_dealerHand.Count >= 3 ? $"   |     {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_dealerHand.Count >= 4 ? $"   |     {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_dealerHand.Count >= 5 ? $"   |     {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
+           $"|_______|   |_______|{(_dealerHand.Count >= 3 ? "   |_______|" : "")}{(_dealerHand.Count >= 4 ? "   |_______|" : "")}{(_dealerHand.Count >= 5 ? "   |_______|" : "")}\n");
+
+            
+
+            Console.WriteLine(
+           $" _______     _______{(_playerHand.Count >= 3 ? "     _______" : "")}{(_playerHand.Count >= 4 ? "     _______" : "")}{(_playerHand.Count >= 5 ? "     _______" : "")}\n" +
+           $"|       |   |       |{(_playerHand.Count >= 3 ? "   |       |" : "")}{(_playerHand.Count >= 4 ? "   |       |" : "")}{(_playerHand.Count >= 5 ? "   |       |" : "")}\n" +
+           $"| {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    |   | {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    |{(_playerHand.Count >= 3 ? $"   | {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 4 ? $"   | {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 5 ? $"   | {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
+           $"|   {_playerHand[0].Symbol}   |   |   {_playerHand[1].Symbol}   |{(_playerHand.Count >= 3 ? $"   |   {_playerHand[2].Symbol}   |" : "")}{(_playerHand.Count >= 4 ? $"   |   {_playerHand[3].Symbol}   |" : "")}{(_playerHand.Count >= 5 ? $"   |   {_playerHand[4].Symbol}   |" : "")}\n" +
+           $"|     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}|   |     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}|{(_playerHand.Count >= 3 ? $"   |     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 4 ? $"   |     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 5 ? $"   |     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
+           $"|_______|   |_______|{(_playerHand.Count >= 3 ? "   |_______|" : "")}{(_playerHand.Count >= 4 ? "   |_______|" : "")}{(_playerHand.Count >= 5 ? "   |_______|" : "")}\n");
+
+            Console.Write(DisplayPlayerTotalSoftorHard());
+                if (PlayerTotal() > 21)
+            {
+                Console.Write(". You busted\n");
+            }
+                else { Console.WriteLine(); }
+        }
+        public string DisplayPlayerTotalSoftorHard()
+        {
+            int playerTotal = 0;
+            bool hasAce = false;
+
+            foreach (Card card in _playerHand)
+            {
+                if (card.Number == "Ace")
+                { hasAce = true; }
+            }
+            foreach (Card card in _playerHand)
+            {
+                playerTotal += card.Value;
+            }
+            if (hasAce == true)
+            {
+                int softTotal = playerTotal + 10;
+                if (softTotal > 21) { return $"Your hard total is {playerTotal}"; }
+                else { return $"Your hard total is {playerTotal} and your soft total is {softTotal}"; }
+            }
+
+            else
+            { return $"Your card total is {playerTotal}"; }
         }
         // It does total of all your cards assuming ace is one, a total of all your cards assuming Ace 11. Returns the closest to 21. 11 > 21 it's nah, don't use
         // but if the 1 value still under 21. others if both are over 21 > bust. Dealer would just do the same thing.
@@ -180,16 +289,6 @@ namespace PairProgrammingGame
             else
             { return dealerTotal; }
         }
-
-        // Double down can be down later
-        // Method for keeping track of players money $1000
-        //      Make bet
-        //      Input bet upto 200 or money left
-        //      Loose bet
-        //      win bet payout 1.5x
-        //      Outfor when out money
-
-
         // Method for dealer AI
         public void Dealer()
         {
@@ -212,26 +311,22 @@ namespace PairProgrammingGame
                 else if (total < 17)
                 {
                     DealerHit();
+                    
                     total = DealerTotal();
                 }
             }
         }
-
-
-        // Method for outcomes
-        // Push (tie)
-        // Dealer wins (run loose bet method)
-        // Player wins (run multiply bet method)
-
-        public void WinnerOutput()
+        public int WinnerOutput()
         {
             int playerTotal = PlayerTotal();
             int total = DealerTotal();
-            if (total > 21) { Console.WriteLine("Player Wins\n"); }
-            else if (playerTotal > 21) { Console.WriteLine("Dealer wins!\n"); }
-            else if (total > playerTotal) { Console.WriteLine("Dealer wins!\n"); }
-            else if (playerTotal > total) { Console.WriteLine("You win!\n"); }
-            else if (total == playerTotal) { Console.WriteLine("Push\n"); }
+            if (playerTotal == 21 && _playerHand.Count == 2) { return 3; }
+            else if (total > 21) { return 0; }
+            else if (playerTotal > 21) { return 1; }
+            else if (total > playerTotal) { return 1; }
+            else if (playerTotal > total) { return 0; }
+            else if (total == playerTotal) { return 2; }
+            else { Console.WriteLine("Calculation error"); return 2; }
 
         }
     }
