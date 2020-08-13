@@ -112,7 +112,7 @@ namespace PairProgrammingGame
             Card newCard = GetRandomCard();
             deck._deck.Remove(newCard.Index);
             _playerHand.Add(newCard);
-            Console.WriteLine($"Hit! You were dealt a {newCard.Number} of {newCard.Suit}");
+            Console.WriteLine($"Hit! You were dealt a {newCard.Number} of {newCard.Suit}\n"+$"{newCard.Letter}{newCard.Symbol}");
             --currentDeckSize;
         }
 

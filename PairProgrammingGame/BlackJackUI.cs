@@ -47,7 +47,9 @@ namespace PairProgrammingGame
             Console.WriteLine($"The dealer reveals his other card is a {dealerCard2.Number} of {dealerCard2.Suit}");
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
             repo.Dealer();
-            Console.WriteLine($"Dealer has {repo.DealerTotal()}\n");
+            Console.WriteLine($"Dealer has {repo.DealerTotal()}");
+            DealerOutcomesPrint();
+            Console.WriteLine();
             System.Threading.Thread.Sleep(TimeSpan.FromSeconds(3));
 
 
@@ -63,6 +65,15 @@ namespace PairProgrammingGame
             Console.ReadLine();
         }
 
+        public void DealerOutcomesPrint()
+        {
+            int playerTotal = repo.PlayerTotal();
+            int total = repo.DealerTotal();
+            if (total > 21) { Console.WriteLine("Dealer busts!"); }
+            else if (total == 21) { Console.WriteLine("Dealer has Black Jack!"); }
+            else { Console.WriteLine($"Dealer stands" + (playerTotal >= 22 ? " because you busted" : "!")); }
+        }
+
         public void PlayerOptions()
         {
             bool playerContinue = true;
@@ -73,7 +84,7 @@ namespace PairProgrammingGame
                 else if (repo.PlayerTotal() == 21) { Console.WriteLine("Black Jack!\n"); playerContinue = false; }
                 else {
                     Console.WriteLine("Would you like to [H]it or [S]tand?");
-                string input = Console.ReadLine();
+                    string input = Console.ReadLine();
                     switch (input.ToLower())
                     {
                         case "hit":
