@@ -22,7 +22,7 @@ namespace PairProgrammingGame
                 PlayGame();
                 if (playerChips == 0)
                 {
-                    playGame = false; Console.WriteLine("You lost all your money. You loose.");
+                    playGame = false; Console.WriteLine("You lost all your money. You get nothing! You loose. Good day, Sir!");
                     Console.ReadLine();
                 }
             }
@@ -41,7 +41,7 @@ namespace PairProgrammingGame
             
             Console.WriteLine();
             // Create a display player card system
-            repo.DisplayCards();
+            repo.DisplayCardsAfterDeal();
             
             // Player Actions
             PlayerOptions();
@@ -92,23 +92,24 @@ namespace PairProgrammingGame
  "      ███    ███ ███▌    ▄   ███    ███ ███    ███   ███ ▀███▄          ███   ███    ███ ███    ███   ███ ▀███▄ \n" +
  "    ▄█████████▀  █████▄▄██   ███    █▀  ████████▀    ███   ▀█▀      █▄ ▄███   ███    █▀  ████████▀    ███   ▀█▀ \n" +
  "                 ▀                                   ▀              ▀▀▀▀▀▀                            ▀         ");
-            Console.WriteLine($"Your current chip count is: {playerChips}");
+            Console.WriteLine($"\tYour current chip count is: {playerChips}");
             if (playerChips < 200) { currentMax = playerChips; }
 
             // Need a check that input in inbewteen our set minimum '1' and our currentMax variable
             // playerbet >= 1 && <= maxbetvar
             while (true)
             {
-            Console.Write($"How much would you like to bet, up to {currentMax}?: ");
-            var playerBet = Int32.Parse(Console.ReadLine());
-                if (playerBet >= 1 && playerBet <= currentMax)
+            Console.Write($"\tHow much would you like to bet, up to {currentMax}?: ");
+            string playerBet = Console.ReadLine();
+                int chipBet;
+                if (int.TryParse(playerBet,out chipBet) && chipBet >= 1 && chipBet <= currentMax)
                 {
-                    currentBet = playerBet; return;
+                    currentBet = chipBet; return;
                 }
 
                 else
                 {
-                    Console.WriteLine($"Again, please enter a bet between 1 and {currentMax}.");
+                    Console.WriteLine($"\tPlease enter a bet between 1 and {currentMax}.");
                 }
             }
         }
@@ -158,11 +159,11 @@ namespace PairProgrammingGame
             while (playerContinue)
             {
                 Console.WriteLine(repo.DisplayPlayerTotalSoftorHard());
-                if (repo.PlayerTotal() > 21) { Console.WriteLine("You busted\n"); playerContinue = false; }
-                else if (repo.PlayerTotal() == 21) { Console.WriteLine("Black Jack!\n"); playerContinue = false; }
+                if (repo.PlayerTotal() > 21) { Console.WriteLine("You busted\n"); System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1)); playerContinue = false; }
+                else if (repo.PlayerTotal() == 21) { Console.WriteLine("Black Jack!\n"); System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2)); playerContinue = false; }
                 else
                 {
-                    Console.WriteLine("Would you like to [H]it, [S]tand or [D]ouble Down?");
+                    Console.WriteLine("\nWould you like to [H]it, [S]tand or [D]ouble Down?");
                     string input = Console.ReadLine();
                     switch (input.ToLower())
                     {

@@ -153,35 +153,6 @@ namespace PairProgrammingGame
             else
             { return playerTotal; }
         }
-
-        public void DisplayCards()
-        {
-            Console.Clear();
-            Card dealerCard1 = _dealerHand[0];
-            Card dealerCard2 = _dealerHand[1];
-            Card playerCard1 = _playerHand[0];
-            Card playerCard2 = _playerHand[1];
-
-
-            Console.WriteLine(
-                " _______     _______\n" +
-                "|       |   |       |\n" +
-               $"| {dealerCard1.Letter}{(dealerCard1.Letter == "10" ? "" : " ")}    |   | ///// |\n" +
-               $"|   {dealerCard1.Symbol}   |   | ///// |\n" +
-               $"|    {(dealerCard1.Letter == "10" ? "" : " ")}{dealerCard1.Letter} |   | ///// |\n" +
-               $"|_______|   |_______|\n");
-            Console.WriteLine($"The dealer is showing a {dealerCard1.Number} of {dealerCard1.Suit}\n");
-
-            Console.WriteLine(
-            " _______     _______\n" +
-            "|       |   |       |\n" +
-           $"| {playerCard1.Letter}{(playerCard1.Letter == "10" ? "" : " ")}    |   | {playerCard2.Letter}{(playerCard2.Letter == "10" ? "" : " ")}    |\n" +
-           $"|   {playerCard1.Symbol}   |   |   {playerCard2.Symbol}   |\n" +
-           $"|    {(playerCard1.Letter == "10" ? "" : " ")}{playerCard1.Letter} |   |    {(playerCard2.Letter == "10" ? "" : " ")}{playerCard2.Letter} |\n" +
-           $"|_______|   |_______|\n");
-            Console.WriteLine($"You were dealt:\n" + $"\t{playerCard1.Number} of {playerCard1.Suit} {playerCard1.Letter}{playerCard1.Symbol}\n" + $"\t{playerCard2.Number} of {playerCard2.Suit} {playerCard2.Letter}{playerCard2.Symbol}");
-
-        }
         public void DisplayCardsAfterDeal()
         {
             Console.Clear();
@@ -192,21 +163,23 @@ namespace PairProgrammingGame
 
 
             Console.WriteLine(
-                " _______     _______\n" +
-                "|       |   |       |\n" +
-               $"| {dealerCard1.Letter}{(dealerCard1.Letter == "10" ? "" : " ")}    |   | ///// |\n" +
-               $"|   {dealerCard1.Symbol}   |   | ///// |\n" +
-               $"|    {(dealerCard1.Letter == "10" ? "" : " ")}{dealerCard1.Letter} |   | ///// |\n" +
-               $"|_______|   |_______|\n");
-            Console.WriteLine($"The dealer is showing a {dealerCard1.Number} of {dealerCard1.Suit}\n");
+                "\t┌───────┐   ┌───────┐\n" +
+               $"\t│ {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}    │   │░░░░░░░│\n" +
+                "\t│       │   │░░░░░░░│\n" +
+               $"\t│   {_dealerHand[0].Symbol}   │   │░░░░░░░│\n" +
+                "\t│       │   │░░░░░░░│\n" +
+               $"\t│    {(_dealerHand[0].Letter == "10" ? "" : " ")}{_dealerHand[0].Letter} │   │░░░░░░░│\n" +
+               $"\t└───────┘   └───────┘\n");
+            Console.WriteLine($"The dealer is showing a {_dealerHand[0].Number} of {_dealerHand[0].Suit}\n");
 
             Console.WriteLine(
-           $" _______     _______{(_playerHand.Count >= 3 ? "     _______" : "")}{(_playerHand.Count >= 4 ? "     _______" : "")}{(_playerHand.Count >= 5 ? "     _______" : "")}\n" +
-           $"|       |   |       |{(_playerHand.Count >= 3 ? "   |       |" : "")}{(_playerHand.Count >= 4 ? "   |       |" : "")}{(_playerHand.Count >= 5 ? "   |       |" : "")}\n" +
-           $"| {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    |   | {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    |{(_playerHand.Count >= 3 ? $"   | {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 4 ? $"   | {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 5 ? $"   | {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
-           $"|   {_playerHand[0].Symbol}   |   |   {_playerHand[0].Symbol}   |{(_playerHand.Count >= 3 ? $"   |   {_playerHand[2].Symbol}   |" : "")}{(_playerHand.Count >= 4 ? $"   |   {_playerHand[3].Symbol}   |" : "")}{(_playerHand.Count >= 5 ? $"   |   {_playerHand[4].Symbol}   |" : "")}\n" +
-           $"|     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}|   |     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}|{(_playerHand.Count >= 3 ? $"   |     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 4 ? $"   |     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 5 ? $"   |     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
-           $"|_______|   |_______|{(_playerHand.Count >= 3 ? "   |_______|" : "")}{(_playerHand.Count >= 4 ? "   |_______|" : "")}{(_playerHand.Count >= 5 ? "   |_______|" : "")}\n");
+           $"\t┌───────┐   ┌───────┐{(_playerHand.Count >= 3 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 4 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 5 ? "   ┌───────┐" : "")}\n" +
+           $"\t│ {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    │   │ {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    │{(_playerHand.Count >= 3 ? $"   │ {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    │" : "")}{(_playerHand.Count >= 4 ? $"   │ {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    │" : "")}{(_playerHand.Count >= 5 ? $"   │ {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    │" : "")}\n" +
+           $"\t│       │   │       │{(_playerHand.Count >= 3 ? "   │       │" : "")}{(_playerHand.Count >= 4 ? "   │       │" : "")}{(_playerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│   {_playerHand[0].Symbol}   │   │   {_playerHand[0].Symbol}   │{(_playerHand.Count >= 3 ? $"   │   {_playerHand[2].Symbol}   │" : "")}{(_playerHand.Count >= 4 ? $"   │   {_playerHand[3].Symbol}   │" : "")}{(_playerHand.Count >= 5 ? $"   │   {_playerHand[4].Symbol}   │" : "")}\n" +
+           $"\t│       │   │       │{(_playerHand.Count >= 3 ? "   │       │" : "")}{(_playerHand.Count >= 4 ? "   │       │" : "")}{(_playerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}│   │     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}│{(_playerHand.Count >= 3 ? $"   │     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 4 ? $"   │     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 5 ? $"   │     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}│" : "")}\n" +
+           $"\t└───────┘   └───────┘{(_playerHand.Count >= 3 ? "   └───────┘" : "")}{(_playerHand.Count >= 4 ? "   └───────┘" : "")}{(_playerHand.Count >= 5 ? "   └───────┘" : "")}\n");
             
         }
         public void DisplayCardsAfterPlayerGoes()
@@ -214,22 +187,24 @@ namespace PairProgrammingGame
             Console.Clear();
 
             Console.WriteLine(
-           $" _______     _______{(_dealerHand.Count >= 3 ? "     _______" : "")}{(_dealerHand.Count >= 4 ? "     _______" : "")}{(_dealerHand.Count >= 5 ? "     _______" : "")}\n" +
-           $"|       |   |       |{(_dealerHand.Count >= 3 ? "   |       |" : "")}{(_dealerHand.Count >= 4 ? "   |       |" : "")}{(_dealerHand.Count >= 5 ? "   |       |" : "")}\n" +
-           $"| {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}    |   | {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}    |{(_dealerHand.Count >= 3 ? $"   | {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_dealerHand.Count >= 4 ? $"   | {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_dealerHand.Count >= 5 ? $"   | {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
-           $"|   {_dealerHand[0].Symbol}   |   |   {_dealerHand[1].Symbol}   |{(_dealerHand.Count >= 3 ? $"   |   {_dealerHand[2].Symbol}   |" : "")}{(_dealerHand.Count >= 4 ? $"   |   {_dealerHand[3].Symbol}   |" : "")}{(_dealerHand.Count >= 5 ? $"   |   {_dealerHand[4].Symbol}   |" : "")}\n" +
-           $"|     {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}|   |     {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}|{(_dealerHand.Count >= 3 ? $"   |     {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_dealerHand.Count >= 4 ? $"   |     {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_dealerHand.Count >= 5 ? $"   |     {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
-           $"|_______|   |_______|{(_dealerHand.Count >= 3 ? "   |_______|" : "")}{(_dealerHand.Count >= 4 ? "   |_______|" : "")}{(_dealerHand.Count >= 5 ? "   |_______|" : "")}\n");
+           $"\t┌───────┐   ┌───────┐{(_dealerHand.Count >= 3 ? "   ┌───────┐" : "")}{(_dealerHand.Count >= 4 ? "   ┌───────┐" : "")}{(_dealerHand.Count >= 5 ? "   ┌───────┐" : "")}\n" +
+           $"\t│ {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}    │   │ {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}    │{(_dealerHand.Count >= 3 ? $"   │ {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}    │" : "")}{(_dealerHand.Count >= 4 ? $"   │ {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}    │" : "")}{(_dealerHand.Count >= 5 ? $"   │ {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}    │" : "")}\n" +
+           $"\t│       │   │       │{(_dealerHand.Count >= 3 ? "   │       │" : "")}{(_dealerHand.Count >= 4 ? "   │       │" : "")}{(_dealerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│   {_dealerHand[0].Symbol}   │   │   {_dealerHand[1].Symbol}   │{(_dealerHand.Count >= 3 ? $"   │   {_dealerHand[2].Symbol}   │" : "")}{(_dealerHand.Count >= 4 ? $"   │   {_dealerHand[3].Symbol}   │" : "")}{(_dealerHand.Count >= 5 ? $"   │   {_dealerHand[4].Symbol}   │" : "")}\n" +
+           $"\t│       │   │       │{(_dealerHand.Count >= 3 ? "   │       │" : "")}{(_dealerHand.Count >= 4 ? "   │       │" : "")}{(_dealerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│     {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}│   │     {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}│{(_dealerHand.Count >= 3 ? $"   │     {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}│" : "")}{(_dealerHand.Count >= 4 ? $"   │     {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}│" : "")}{(_dealerHand.Count >= 5 ? $"   │     {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}│" : "")}\n" +
+           $"\t└───────┘   └───────┘{(_dealerHand.Count >= 3 ? "   └───────┘" : "")}{(_dealerHand.Count >= 4 ? "   └───────┘" : "")}{(_dealerHand.Count >= 5 ? "   └───────┘" : "")}\n");
 
             
 
             Console.WriteLine(
-           $" _______     _______{(_playerHand.Count >= 3 ? "     _______" : "")}{(_playerHand.Count >= 4 ? "     _______" : "")}{(_playerHand.Count >= 5 ? "     _______" : "")}\n" +
-           $"|       |   |       |{(_playerHand.Count >= 3 ? "   |       |" : "")}{(_playerHand.Count >= 4 ? "   |       |" : "")}{(_playerHand.Count >= 5 ? "   |       |" : "")}\n" +
-           $"| {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    |   | {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    |{(_playerHand.Count >= 3 ? $"   | {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 4 ? $"   | {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    |" : "")}{(_playerHand.Count >= 5 ? $"   | {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    |" : "")}\n" +
-           $"|   {_playerHand[0].Symbol}   |   |   {_playerHand[1].Symbol}   |{(_playerHand.Count >= 3 ? $"   |   {_playerHand[2].Symbol}   |" : "")}{(_playerHand.Count >= 4 ? $"   |   {_playerHand[3].Symbol}   |" : "")}{(_playerHand.Count >= 5 ? $"   |   {_playerHand[4].Symbol}   |" : "")}\n" +
-           $"|     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}|   |     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}|{(_playerHand.Count >= 3 ? $"   |     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 4 ? $"   |     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}|" : "")}{(_playerHand.Count >= 5 ? $"   |     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}|" : "")}\n" +
-           $"|_______|   |_______|{(_playerHand.Count >= 3 ? "   |_______|" : "")}{(_playerHand.Count >= 4 ? "   |_______|" : "")}{(_playerHand.Count >= 5 ? "   |_______|" : "")}\n");
+           $"\t┌───────┐   ┌───────┐{(_playerHand.Count >= 3 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 4 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 5 ? "   ┌───────┐" : "")}\n" +
+           $"\t│ {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}    │   │ {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}    │{(_playerHand.Count >= 3 ? $"   │ {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}    │" : "")}{(_playerHand.Count >= 4 ? $"   │ {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}    │" : "")}{(_playerHand.Count >= 5 ? $"   │ {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}    │" : "")}\n" +
+           $"\t│       │   │       │{(_playerHand.Count >= 3 ? "   │       │" : "")}{(_playerHand.Count >= 4 ? "   │       │" : "")}{(_playerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│   {_playerHand[0].Symbol}   │   │   {_playerHand[1].Symbol}   │{(_playerHand.Count >= 3 ? $"   │   {_playerHand[2].Symbol}   │" : "")}{(_playerHand.Count >= 4 ? $"   │   {_playerHand[3].Symbol}   │" : "")}{(_playerHand.Count >= 5 ? $"   │   {_playerHand[4].Symbol}   │" : "")}\n" +
+           $"\t│       │   │       │{(_playerHand.Count >= 3 ? "   │       │" : "")}{(_playerHand.Count >= 4 ? "   │       │" : "")}{(_playerHand.Count >= 5 ? "   │       │" : "")}\n" +
+           $"\t│     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}│   │     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}│{(_playerHand.Count >= 3 ? $"   │     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 4 ? $"   │     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 5 ? $"   │     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}│" : "")}\n" +
+           $"\t└───────┘   └───────┘{(_playerHand.Count >= 3 ? "   └───────┘" : "")}{(_playerHand.Count >= 4 ? "   └───────┘" : "")}{(_playerHand.Count >= 5 ? "   └───────┘" : "")}\n");
 
             Console.Write(DisplayPlayerTotalSoftorHard());
                 if (PlayerTotal() > 21)
