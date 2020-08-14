@@ -19,9 +19,11 @@ namespace PairProgrammingGame
 
         public void Shuffle()
         {
+            Console.Clear();
             deck._deck.Clear();
             _playerHand.Clear();
             _dealerHand.Clear();
+            //Console.WriteLine("The deck is being shuffled");
 
             // Re-add the cards to the deck
             deck._deck.Add(0, new Card("Ace", 1, Suit.Spades, 0));
@@ -77,6 +79,7 @@ namespace PairProgrammingGame
             deck._deck.Add(50, new Card("Queen", 10, Suit.Diamonds, 50));
             deck._deck.Add(51, new Card("King", 10, Suit.Diamonds, 51));
             currentDeckSize = 51;
+            //System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
         }
 
         public Card GetRandomCard()

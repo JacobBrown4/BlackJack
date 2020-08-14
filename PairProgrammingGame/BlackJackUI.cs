@@ -9,6 +9,7 @@ namespace PairProgrammingGame
     class BlackJackUI
     {
         Repository repo = new Repository();
+        Deck deck = new Deck();
         bool playGame = true;
         int playerChips = 1000;
         int currentBet = 50;
@@ -34,8 +35,8 @@ namespace PairProgrammingGame
             Bet();
 
             // Give Cards
-            Console.Clear();
-            repo.Shuffle();
+            
+            if (deck._deck.Count < 8)repo.Shuffle();
             repo.Deal();
 
             
@@ -115,7 +116,7 @@ namespace PairProgrammingGame
         }
         public void Payout()
         {
-            int result = repo.WinnerOutput(); //(0 = player won, 1= dealer won, 2 = tie/push)
+            int result = repo.WinnerOutput(); //(0 = player won, 1= dealer won, 2 = tie/push, 3 = double down)
             if (doubleDown == true)
             { currentBet *= 2; }
             if (result == 0)
