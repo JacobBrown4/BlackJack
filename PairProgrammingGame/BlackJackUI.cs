@@ -8,16 +8,18 @@ namespace PairProgrammingGame
 {
     class BlackJackUI
     {
-        Repository repo = new Repository();
-        Deck deck = new Deck();
+        private readonly Repository repo = new Repository();
+        private readonly Deck deck = new Deck();
         bool playGame = true;
         int playerChips = 1000;
         int currentBet = 50;
         int currentMax = 200;
         bool doubleDown = false;
+        bool aiMode = false;
 
         public void Run()
         {
+            ToggleAIMode();
             while (playGame)
             {
                 PlayGame();
@@ -29,21 +31,37 @@ namespace PairProgrammingGame
             }
         }
 
+        public void ToggleAIMode()
+        {
+            Console.WriteLine("Before we play would you like to play in AI mode?\n" +
+                "In this mode the game will play itself but use the rules of play for most successful BlackJack run");
+            Console.WriteLine("Press any key to continue, press 'y' to run on AI Mode");
+            var input = Console.ReadKey();
+            switch (input.Key)
+            {
+                case ConsoleKey.Y:
+                    aiMode = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+
         public void PlayGame()
         {
             // Bet
             Bet();
 
             // Give Cards
-            
-            if (deck._deck.Count < 8)repo.Shuffle();
+
+            if (deck._deck.Count < 8) repo.Shuffle();
             repo.Deal();
 
-            
+
             Console.WriteLine();
             // Create a display player card system
             repo.DisplayCardsAfterDeal();
-            
+
             // Player Actions
             PlayerOptions();
             Console.WriteLine($"The dealer reveals a {repo._dealerHand[1].Number} of {repo._dealerHand[1].Suit}\n");
@@ -100,10 +118,10 @@ namespace PairProgrammingGame
             // playerbet >= 1 && <= maxbetvar
             while (true)
             {
-            Console.Write($"\tHow much would you like to bet, up to {currentMax}?: ");
-            string playerBet = Console.ReadLine();
+                Console.Write($"\tHow much would you like to bet, up to {currentMax}?: ");
+                string playerBet = PlayerOrAIBet();
                 int chipBet;
-                if (int.TryParse(playerBet,out chipBet) && chipBet >= 1 && chipBet <= currentMax)
+                if (int.TryParse(playerBet, out chipBet) && chipBet >= 1 && chipBet <= currentMax)
                 {
                     currentBet = chipBet; return;
                 }
@@ -114,17 +132,36 @@ namespace PairProgrammingGame
                 }
             }
         }
+
+        public string PlayerOrAIBet()
+        {
+            if (aiMode == true)
+            {
+                if (playerChips > 1000)
+                    return "200";
+                else if (playerChips <= 1200 && playerChips >= 70)
+                {
+                    return Math.Round((double)playerChips/10).ToString();
+                }
+                else
+                    return playerChips.ToString();
+            }
+            else
+                return Console.ReadLine();
+        }
         public void Payout()
         {
             int result = repo.WinnerOutput(); //(0 = player won, 1= dealer won, 2 = tie/push, 3 = double down)
             if (doubleDown == true)
-            { currentBet *= 2; }
+            { currentBet *= 2;
+                Console.WriteLine("You doubled down");
+            }
             if (result == 0)
             {
-                double payOutRaw = currentBet * 2;
+                double payOutRaw = currentBet * 1;
                 int payOut = (int)Math.Floor(payOutRaw);
                 playerChips += payOut;
-                Console.WriteLine($"You won ${payOut}! Your new chip count is {playerChips}.");
+                Console.WriteLine($"You won ${payOut*2}! Your new chip count is {playerChips}.");
             }
 
             else if (result == 3)
@@ -132,7 +169,7 @@ namespace PairProgrammingGame
                 double payOutRaw = currentBet * 1.5;
                 int payOut = (int)Math.Floor(payOutRaw);
                 playerChips += payOut;
-                Console.WriteLine($"You won by Black Jack! You win ${payOut}! Your new chip count is {playerChips}.");
+                Console.WriteLine($"You won by Black Jack! You win ${payOut*2}! Your new chip count is {playerChips}.");
             }
             else if (result == 1)
             {
@@ -165,7 +202,7 @@ namespace PairProgrammingGame
                 else
                 {
                     Console.WriteLine("\nWould you like to [H]it, [S]tand or [D]ouble Down?");
-                    string input = Console.ReadLine();
+                    string input = PlayerOrAIPlay();
                     switch (input.ToLower())
                     {
                         case "hit":
@@ -187,6 +224,134 @@ namespace PairProgrammingGame
                     }
                 }
             }
+        }
+
+        public string PlayerOrAIPlay()
+        {
+            if (aiMode == true)
+            {
+
+                if (repo.SoftTotal() != 0 && repo.HardTotal() >= 11)
+                {
+                    if (repo.SoftTotal() == 10)
+                    {
+                        return "s";
+                    }
+                    else if (repo.SoftTotal() == 9)
+                    {
+                        if (repo._dealerHand[0].Value == 6)
+                            return "d";
+                        else
+                            return "s";
+                    }
+                    else if (repo.SoftTotal() == 8)
+                    {
+                        if (repo._dealerHand[0].Value <= 6)
+                            return "d";
+                        else if (repo._dealerHand[0].Value <= 8)
+                            return "s";
+                        else
+                            return "h";
+                    }
+                    else if (repo.SoftTotal() == 7)
+                    {
+                        if (repo._dealerHand[0].Value >= 3 && repo._dealerHand[0].Value <= 6)
+                        {
+                            return "d";
+                        }
+                        else
+                            return "h";
+                    }
+                    else if (repo.SoftTotal() == 6)
+                    {
+                        if (repo._dealerHand[0].Value >= 4 && repo._dealerHand[0].Value <= 6)
+                        {
+                            return "d";
+                        }
+                        else
+                            return "h";
+                    }
+                    else if (repo.SoftTotal() == 5)
+                    {
+                        if (repo._dealerHand[0].Value >= 4 && repo._dealerHand[0].Value <= 6)
+                        {
+                            return "d";
+                        }
+                        else
+                            return "h";
+                    }
+                    else if (repo.SoftTotal() == 4)
+                    {
+                        if (repo._dealerHand[0].Value >= 5 && repo._dealerHand[0].Value <= 6)
+                        {
+                            return "d";
+                        }
+                        else
+                            return "h";
+                    }
+                    else if (repo.SoftTotal() == 3)
+                    {
+                        if (repo._dealerHand[0].Value >= 5 && repo._dealerHand[0].Value <= 6)
+                        {
+                            return "d";
+                        }
+                        else
+                            return "h";
+                    }
+                    else
+                        return "h";
+
+                }
+                else
+                {
+                    if (repo.PlayerTotal() >= 17)
+                    {
+                        return "s";
+                    }
+                    else if (repo.PlayerTotal() <= 16 && repo.PlayerTotal() >= 13)
+                    {
+                        if (repo._dealerHand[0].Value <= 6)
+                        {
+                            return "s";
+                        }
+                        else return "h";
+                    }
+                    else if (repo.PlayerTotal() == 12)
+                    {
+                        if (repo._dealerHand[0].Value < 4 || repo._dealerHand[0].Value > 6)
+                        {
+                            return "h";
+                        }
+                        else return "s";
+                    }
+                    else if (repo.PlayerTotal() == 11)
+                    {
+                        return "d";
+                    }
+                    else if (repo.PlayerTotal() == 10)
+                    {
+                        if (repo._dealerHand[0].Value <= 9)
+                        {
+                            return "d";
+                        }
+                        else return "h";
+                    }
+                    else if (repo.PlayerTotal() == 9)
+                    {
+                        if (repo._dealerHand[0].Value <= 6 && repo._dealerHand[0].Value >= 3)
+                        {
+                            return "d";
+                        }
+                        else return "h";
+                    }
+                    else return "h";
+                }
+            }
+            else
+                return Console.ReadLine();
+            // Hit
+            // Stand
+            // Double down
         }
     }
 }

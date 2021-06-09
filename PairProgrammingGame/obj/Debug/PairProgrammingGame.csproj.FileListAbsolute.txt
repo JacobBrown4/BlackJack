@@ -5,3 +5,17 @@ C:\ElevenFiftyProjects\DotNetProjects\FullProjects\PairProgrammingGame\PairProgr
 C:\ElevenFiftyProjects\DotNetProjects\FullProjects\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.csproj.CoreCompileInputs.cache
 C:\ElevenFiftyProjects\DotNetProjects\FullProjects\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.exe
 C:\ElevenFiftyProjects\DotNetProjects\FullProjects\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.pdb
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\bin\Debug\PairProgrammingGame.exe.config
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\bin\Debug\PairProgrammingGame.exe
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\bin\Debug\PairProgrammingGame.pdb
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.csprojAssemblyReference.cache
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.csproj.CoreCompileInputs.cache
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.exe
+C:\ElevenFiftyProjects\59SD\Gold Badge\PairProgrammingGame\PairProgrammingGame\obj\Debug\PairProgrammingGame.pdb
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\bin\Debug\PairProgrammingGame.exe.config
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\bin\Debug\PairProgrammingGame.exe
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\bin\Debug\PairProgrammingGame.pdb
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\obj\Debug\PairProgrammingGame.csproj.AssemblyReference.cache
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\obj\Debug\PairProgrammingGame.csproj.CoreCompileInputs.cache
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\obj\Debug\PairProgrammingGame.exe
+C:\ElevenFiftyProjects\59SD\Gold Badge\BlackJack\PairProgrammingGame\obj\Debug\PairProgrammingGame.pdb

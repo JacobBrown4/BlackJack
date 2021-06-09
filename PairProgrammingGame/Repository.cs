@@ -156,6 +156,41 @@ namespace PairProgrammingGame
             else
             { return playerTotal; }
         }
+
+        public int SoftTotal()
+        {
+            int playerTotal = 0;
+            bool hasAce = false;
+            foreach (Card card in _playerHand)
+            {
+                if (card.Number == "Ace")
+                { hasAce = true; }
+            }
+            if (hasAce == true)
+            {
+                foreach (Card card in _playerHand)
+                {
+                    playerTotal += card.Value;
+                }
+                int softTotal = playerTotal + 10;
+                if (softTotal > 21) { return 0; }
+                else if (softTotal > playerTotal) { return softTotal; }
+                else { return 0; }
+
+            }
+            else
+            { return 0; }
+        }
+
+        public int HardTotal()
+        {
+            int playerTotal = 0;
+            foreach (Card card in _playerHand)
+            {
+                playerTotal += card.Value;
+            }
+            return playerTotal;
+        }
         public void DisplayCardsAfterDeal()
         {
             Console.Clear();
@@ -183,7 +218,7 @@ namespace PairProgrammingGame
            $"\t│       │   │       │{(_playerHand.Count >= 3 ? "   │       │" : "")}{(_playerHand.Count >= 4 ? "   │       │" : "")}{(_playerHand.Count >= 5 ? "   │       │" : "")}\n" +
            $"\t│     {_playerHand[0].Letter}{(_playerHand[0].Letter == "10" ? "" : " ")}│   │     {_playerHand[1].Letter}{(_playerHand[1].Letter == "10" ? "" : " ")}│{(_playerHand.Count >= 3 ? $"   │     {_playerHand[2].Letter}{(_playerHand[2].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 4 ? $"   │     {_playerHand[3].Letter}{(_playerHand[3].Letter == "10" ? "" : " ")}│" : "")}{(_playerHand.Count >= 5 ? $"   │     {_playerHand[4].Letter}{(_playerHand[4].Letter == "10" ? "" : " ")}│" : "")}\n" +
            $"\t└───────┘   └───────┘{(_playerHand.Count >= 3 ? "   └───────┘" : "")}{(_playerHand.Count >= 4 ? "   └───────┘" : "")}{(_playerHand.Count >= 5 ? "   └───────┘" : "")}\n");
-            
+
         }
         public void DisplayCardsAfterPlayerGoes()
         {
@@ -198,7 +233,7 @@ namespace PairProgrammingGame
            $"\t│     {_dealerHand[0].Letter}{(_dealerHand[0].Letter == "10" ? "" : " ")}│   │     {_dealerHand[1].Letter}{(_dealerHand[1].Letter == "10" ? "" : " ")}│{(_dealerHand.Count >= 3 ? $"   │     {_dealerHand[2].Letter}{(_dealerHand[2].Letter == "10" ? "" : " ")}│" : "")}{(_dealerHand.Count >= 4 ? $"   │     {_dealerHand[3].Letter}{(_dealerHand[3].Letter == "10" ? "" : " ")}│" : "")}{(_dealerHand.Count >= 5 ? $"   │     {_dealerHand[4].Letter}{(_dealerHand[4].Letter == "10" ? "" : " ")}│" : "")}\n" +
            $"\t└───────┘   └───────┘{(_dealerHand.Count >= 3 ? "   └───────┘" : "")}{(_dealerHand.Count >= 4 ? "   └───────┘" : "")}{(_dealerHand.Count >= 5 ? "   └───────┘" : "")}\n");
 
-            
+
 
             Console.WriteLine(
            $"\t┌───────┐   ┌───────┐{(_playerHand.Count >= 3 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 4 ? "   ┌───────┐" : "")}{(_playerHand.Count >= 5 ? "   ┌───────┐" : "")}\n" +
@@ -210,11 +245,13 @@ namespace PairProgrammingGame
            $"\t└───────┘   └───────┘{(_playerHand.Count >= 3 ? "   └───────┘" : "")}{(_playerHand.Count >= 4 ? "   └───────┘" : "")}{(_playerHand.Count >= 5 ? "   └───────┘" : "")}\n");
 
             Console.Write(DisplayPlayerTotalSoftorHard());
-                if (PlayerTotal() > 21)
+            if (PlayerTotal() > 21)
             {
                 Console.Write(". You busted\n");
             }
-                else { Console.WriteLine(); }
+            else { Console.WriteLine(); }
+
+           
         }
         public string DisplayPlayerTotalSoftorHard()
         {
@@ -289,11 +326,15 @@ namespace PairProgrammingGame
                 else if (total < 17)
                 {
                     DealerHit();
-                    
+
                     total = DealerTotal();
                 }
             }
         }
+
+        // Auto Player AI
+
+
         public int WinnerOutput()
         {
             int playerTotal = PlayerTotal();
